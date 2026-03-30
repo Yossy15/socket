@@ -1,9 +1,11 @@
+require("dotenv").config();
 const express = require('express');
 const http = require('http');
 const crypto = require('crypto');
 const { Server } = require('socket.io');
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 const server = http.createServer(app);
 const allowedOrigin = '*';
 const io = new Server(server, {
@@ -632,6 +634,6 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log('Socket server is running on port 3000');
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
