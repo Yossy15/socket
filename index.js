@@ -360,7 +360,18 @@ function joinRoomForPlayer(roomCode, name) {
   }
 
   const playerId = generatePlayerId();
-  room.players.set(playerId, createPlayer(name, 'Guest'));
+  
+  let finalName = name;
+  const existingNames = Array.from(room.players.values()).map(p => p.name);
+  if (existingNames.includes(finalName)) {
+    let counter = 1;
+    while (existingNames.includes(`${name} (${counter})`)) {
+      counter++;
+    }
+    finalName = `${name} (${counter})`;
+  }
+
+  room.players.set(playerId, createPlayer(finalName, 'Guest'));
 
   return {
     ok: true,
